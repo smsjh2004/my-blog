@@ -1,0 +1,58 @@
+.appAppBar {
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    margin-top: calc(var(--template-frame-height, 0px) + 28px);
+  }
+  
+  .styledToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    border-radius: calc(var(--border-radius, 8px) + 8px);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--mui-divider, rgba(0, 0, 0, 0.12));
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: var(--mui-shadow, 0px 2px 4px -1px rgba(0, 0, 0, 0.2));
+    padding: 8px 12px;
+  }
+  
+  .toolbarLeft {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .toolbarLeftHidden {
+    display: none;
+  }
+  
+  @media (min-width: 960px) {
+    .toolbarLeftHidden {
+      display: flex;
+    }
+  }
+  
+  .toolbarRight {
+    display: none;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  @media (min-width: 960px) {
+    .toolbarRight {
+      display: flex;
+    }
+  }
+  
+  .blogButton {
+    min-width: 0;
+  }
+  
+  .writeButton {
+    background-color: var(--mui-primary-main, #1976d2); /* Replace with theme color if necessary */
+    color: white;
+  }
+  
