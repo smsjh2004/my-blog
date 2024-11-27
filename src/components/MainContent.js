@@ -1,45 +1,99 @@
 import React, { useState } from 'react';
-import mockData from '../mockData.json'; // JSON 파일 import
-import Pagination from './Pagenation'; // Pagination 컴포넌트 import
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Box from '@mui/material/Box';
+import Pagination from '@mui/material/Pagination';
+import TextField from '@mui/material/TextField';
+import mockData from '../mockData.json';
 import styles from './MainContent.module.css';
 
 const ITEMS_PER_PAGE = 6;
 
 export default function MainContent() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState('');
 
-  // 현재 페이지의 데이터 가져오기
-  const currentData = mockData.slice(
+  // 검색 필터 적용
+  const filteredData = mockData.filter((item) =>
+    item.title?.replace(/ /g, '').toLowerCase().includes(search.replace(/ /g, '').toLowerCase())
+  );
+
+  // 총 페이지 계산
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
+  // 현재 페이지 데이터
+  const currentData = filteredData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (event, page) => {
     setCurrentPage(page);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+    setCurrentPage(1); // 검색 시 첫 페이지로 이동
   };
 
   return (
     <div className={styles.mainContent}>
-      <h1 className={styles.title}>Blog</h1>
-      <p className={styles.subtitle}>Stay in the loop with the latest about our products</p>
+      <Typography variant="h1" className={styles.title}>
+        Blog
+      </Typography>
+      <Typography className={styles.subtitle}>
+        Stay in the loop with the latest about our products
+      </Typography>
 
+      {/* Search Field */}
+      <Box className={styles.searchBox}>
+        <TextField
+          label="Search"
+          variant="outlined"
+          fullWidth
+          onChange={handleSearchChange}
+          value={search}
+        />
+      </Box>
+
+      {/* Data Grid */}
       <div className={styles.grid}>
-        {currentData.map((item, index) => (
-          <div key={index} className={styles.card}>
-            <img src={item.img} alt={item.title} className={styles.cardImage} />
-            <h3 className={styles.cardTitle}>{item.title}</h3>
-            <p className={styles.description}>{item.description}</p>
-          </div>
+        {currentData.map((card, index) => (
+          <Card key={index} className={styles.card}>
+            <CardMedia
+              component="img"
+              alt={card.title}
+              image={card.mainImg}
+              className={styles.cardImage}
+            />
+            <CardContent className={styles.cardContent}>
+              <Typography variant="caption" className={styles.tag}>
+                {card.tag}
+              </Typography>
+              <Typography variant="h6" className={styles.cardTitle}>
+                {card.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" className={styles.description}>
+                {card.description}
+              </Typography>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
-      {/* Pagination 컴포넌트 연결 */}
-      <Pagination
-        totalItems={mockData.length}
-        itemsPerPage={ITEMS_PER_PAGE}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+      {/* Pagination */}
+      <Box className={styles.pagination}>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+          size="large"
+          shape="rounded"
+        />
+      </Box>
     </div>
   );
 }

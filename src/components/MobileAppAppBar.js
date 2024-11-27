@@ -10,7 +10,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Box } from '@mui/material';
 
 
-export function MobileAppAppBar() {
+export default function MobileAppAppBar() {
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (newOpen) => () => {

@@ -18,10 +18,8 @@ function Blog() {
           sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
         >
           <MainContent />
-          {/* <Latest /> */}
         </Container>
-        {/* <Footer /> */}
-        <Pagination />
+        <Footer />
         </div>
     )
 }

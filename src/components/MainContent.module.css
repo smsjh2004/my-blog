@@ -15,17 +15,19 @@
   color: #666;
 }
 
+.searchBox {
+  margin-bottom: 16px;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* 한 행에 3개의 카드 */
   gap: 16px;
 }
 
 .card {
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 16px;
-  text-align: center;
   transition: box-shadow 0.3s, transform 0.3s;
 }
 
@@ -39,13 +41,29 @@
   border-radius: 8px;
 }
 
+.cardContent {
+  padding: 16px;
+}
+
+.tag {
+  font-size: 0.8rem;
+  color: #1976d2;
+  margin-bottom: 8px;
+}
+
 .cardTitle {
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 16px 0 8px;
+  margin-bottom: 8px;
 }
 
 .description {
   font-size: 0.9rem;
   color: #444;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
 }
