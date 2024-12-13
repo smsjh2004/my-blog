@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,15 +8,19 @@ import Pagination from '@mui/material/Pagination';
 import TextField from '@mui/material/TextField';
 import mockData from '../mockData.json';
 import styles from './MainContent.module.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 6;
 
 export default function MainContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   // 검색 필터 적용
-  const filteredData = mockData.filter((item) =>
+  const filteredData = data.filter((item) =>
     item.title?.replace(/ /g, '').toLowerCase().includes(search.replace(/ /g, '').toLowerCase())
   );
 
@@ -38,13 +42,26 @@ export default function MainContent() {
     setCurrentPage(1); // 검색 시 첫 페이지로 이동
   };
 
+
+  const handleCardClick = (id) => {
+    navigate(`/posts/${id}`); // 상세 페이지로 이동
+  };
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/posts')
+      .then((response) => setData(response.data))
+      .catch((error) => console.error('Error fetching posts:', error));
+  }, []);
+
+ 
+
   return (
     <div className={styles.mainContent}>
       <Typography variant="h1" className={styles.title}>
         Blog
       </Typography>
       <Typography className={styles.subtitle}>
-        Stay in the loop with the latest about our products
+        Persistence that knows no giving up.
       </Typography>
 
       {/* Search Field */}
@@ -60,27 +77,33 @@ export default function MainContent() {
 
       {/* Data Grid */}
       <div className={styles.grid}>
-        {currentData.map((card, index) => (
-          <Card key={index} className={styles.card}>
-            <CardMedia
-              component="img"
-              alt={card.title}
-              image={card.mainImg}
-              className={styles.cardImage}
-            />
-            <CardContent className={styles.cardContent}>
-              <Typography variant="caption" className={styles.tag}>
-                {card.tag}
-              </Typography>
-              <Typography variant="h6" className={styles.cardTitle}>
-                {card.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" className={styles.description}>
-                {card.description}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+        {totalPages === 0 ? (
+          <div>작성 된 글이 없습니다. </div>
+        ): (
+          currentData.map((card, index) => (
+            <Card key={index} className={styles.card}>
+              <CardMedia
+                component="img"
+                alt={card.title}
+                image={card.mainImg}
+                className={styles.cardImage}
+                onClick={() => handleCardClick(card.id)}
+              />
+              <CardContent className={styles.cardContent}>
+                <Typography variant="caption" className={styles.tag}>
+                  {card.tag}
+                </Typography>
+                <Typography variant="h6" className={styles.cardTitle}>
+                  {card.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" className={styles.description}>
+                  {card.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))
+        )}
+        
       </div>
 
       {/* Pagination */}

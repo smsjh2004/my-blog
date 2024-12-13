@@ -1,0 +1,52 @@
+/* PostDetail.module.css */
+.header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    font-size: 24px;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .metadata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .tag {
+    background-color: black;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+  }
+  

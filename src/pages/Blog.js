@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import AppAppBar from '../components/AppAppBar';
 import Footer from '../components/Footer';
 import MainContent from '../components/MainContent';
 import Latest from '../components/Latest';
@@ -11,7 +10,7 @@ import Pagination from '../components/Pagenation';
 function Blog() {
     return (
         <div>
-        <AppAppBar />
+        {/* <AppAppBar /> */}
         <Container
           maxWidth="lg"
           component="main"
